@@ -15,7 +15,6 @@ int partition(vector<int>& arr, int s, int e){
         }
         
     }
-
     int pivotIndex = s + count;
     swap(arr[s], arr[pivotIndex]);
 
@@ -27,7 +26,7 @@ int partition(vector<int>& arr, int s, int e){
         {
             i++;
         }
-        while (j < pivotIndex && arr[j] > pivot)
+        while (j > pivotIndex && arr[j] > pivot)
         {
             j--;
         }

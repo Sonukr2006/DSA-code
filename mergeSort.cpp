@@ -12,7 +12,7 @@ void merge(vector<int> &arr, int s, int e)
     // rightSubArray length
     int len2 = e - mid;
 
-    // create Araay like subearray
+    // create Array like subarray
 
     int *first = new int[len1];
     int *second = new int[len2];
