@@ -1,61 +1,65 @@
-
-class TreeSegment{
+class SegmentTree {
     vector<int> seg;
-    public:
-    TreeSegment(int n){
-        seg.resize(4*n+1);
+public:
+    SegmentTree(int n) {
+        seg.assign(4 * n + 5, INT_MAX);
     }
 
-    void build(vector<int> &arr, int ind, int low, int high){
-        if(low == high){
+    // build called as: build(arr, 0, 0, n-1)
+    void build(const vector<int>& arr, int ind, int low, int high) {
+        if (low == high) {
             seg[ind] = arr[low];
             return;
         }
 
-        int mid = low + ((high-low) >> 1);
+        int mid = low + ((high - low) >> 1);
+        int left = (ind << 1) | 1;    // 2*ind + 1
+        int right = (ind + 1) << 1;   // 2*ind + 2
 
-        build(arr, ind << 1 | 1, low, mid);
-        build(arr, (ind + 1) << 1, mid+1, high);
+        build(arr, left, low, mid);
+        build(arr, right, mid + 1, high);
 
-        seg[ind] = min(seg[ind << 1 | 1], seg[(ind+1) << 1]);
+        seg[ind] = min(seg[left], seg[right]);
     }
 
-    int query( int ind, int l, int r, int low, int high){
+    // query called as: query(0, ql, qr, 0, n-1)
+    int query(int ind, int l, int r, int low, int high) {
         // no overlap
-        if(high < l || low > r) return INT_MAX;
+        if (high < l || low > r) return INT_MAX;
 
-        // Complete overlap
-        if(low >= l && high <= r) return seg[ind];
+        // complete overlap
+        if (low >= l && high <= r) return seg[ind];
 
         // partial overlap
-        int mid = low + ((high-low) >> 1);
-        int left = query( ind << 1 | 1, l, r, low, mid);
-        int right = query( (ind + 1) << 1, l, r, mid+1, high);
+        int mid = low + ((high - low) >> 1);
+        int left = query((ind << 1) | 1, l, r, low, mid);
+        int right = query((ind + 1) << 1, l, r, mid + 1, high);
 
         return min(left, right);
     }
 
-
-    void update(int ind, int low, int high, int i, int val){
-        if(low == high){
+    // update called as: update(0, 0, n-1, idx, val)
+    void update(int ind, int low, int high, int i, int val) {
+        if (low == high) {
             seg[ind] = val;
             return;
         }
 
-        int mid = (low + ((high-low) >> 1);
+        int mid = low + ((high - low) >> 1);
+        int left = (ind << 1) | 1;
+        int right = (ind + 1) << 1;
 
-        if(i <= mid) 
-            update(ind << 1 | 1, low, mid, i, val);
+        if (i <= mid)
+            update(left, low, mid, i, val);
         else
-            update((ind +1) << 1, mid+1, high, i, val);
+            update(right, mid + 1, high, i, val);
 
-        seg[ind]= min(seg[ind << 1 | 1], seg[(ind+1) << 1]);
+        seg[ind] = min(seg[left], seg[right]);
     }
 
-    void print(){
-        for(int i = 0; i < seg.size(); ++i){
-            cout << i << " " << seg[i] << endl;
+    void print() const {
+        for (size_t i = 0; i < seg.size(); ++i) {
+            cout << i << " " << seg[i] << '\n';
         }
     }
-
 };
