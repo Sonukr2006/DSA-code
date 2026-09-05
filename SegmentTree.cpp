@@ -12,7 +12,7 @@ class TreeSegment{
             return;
         }
 
-        int mid = (low+high)/2;
+        int mid = low + ((high-low) >> 1);
 
         build(arr, ind << 1 | 1, low, mid);
         build(arr, (ind + 1) << 1, mid+1, high);
@@ -28,7 +28,7 @@ class TreeSegment{
         if(low >= l && high <= r) return seg[ind];
 
         // partial overlap
-        int mid = (low + high) >> 1;
+        int mid = low + ((high-low) >> 1);
         int left = query( ind << 1 | 1, l, r, low, mid);
         int right = query( (ind + 1) << 1, l, r, mid+1, high);
 
@@ -42,7 +42,7 @@ class TreeSegment{
             return;
         }
 
-        int mid = (low+high)/2;
+        int mid = (low + ((high-low) >> 1);
 
         if(i <= mid) 
             update(ind << 1 | 1, low, mid, i, val);
