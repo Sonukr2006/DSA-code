@@ -29,22 +29,13 @@ int main(){
     cout << "Size of Queue: " << q.size() << endl;
     cout << "Back of Queue: " << q.back() << endl;
     cout << "Front Ele of Queue: "<< q.front() << endl;
-
-
+    
     print(q);
-
-
-
-
-
-
-
 
     if(q.empty())
         cout << "Empty ......Njnd" << endl;
     else
         cout << "Not Empty" << endl;
-
 
     cout << endl;
     return 0;
